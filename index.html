@@ -1,0 +1,41 @@
+---
+layout: default
+title: হোম পেজ
+---
+
+<div class="salon-container">
+  <header class="retro-header">
+    <h1>🎬 স্বাগতম আমার ভিডিও পোর্টালে</h1>
+    <p>নিচে আপনার জন্য গুরুত্বপূর্ণ টিউটোরিয়াল ভিডিওটি দেওয়া হলো:</p>
+  </header>
+
+  <!-- Responsive YouTube Video Container -->
+  <div class="video-wrapper">
+    <iframe 
+      src="https://www.youtube.com/embed/v3gwlHi1J6A" 
+      title="ভাতার Status ও Payment Status মোবাইলে কীভাবে দেখবেন? | SAMARTH Portal | West Bengal" 
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+      referrerpolicy="strict-origin-when-cross-origin" 
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <div class="quote-box">
+    <p id="dynamic-quote">"জ্ঞান ছড়িয়ে দিন, প্রযুক্তিকে সহজ করুন!"</p>
+  </div>
+</div>
+
+<script>
+  // প্রতি ৫ সেকেন্ড পর পর উক্তি পরিবর্তন হবে
+  const quotes = [
+    "জ্ঞান ছড়িয়ে দিন, প্রযুক্তিকে সহজ করুন!",
+    "SAMARTH Portal নিয়ে আরও আপডেট শীঘ্রই আসছে।",
+    "ভিডিওটি ভালো লাগলে বন্ধুদের সাথে শেয়ার করুন।",
+    "প্রযুক্তির সঠিক ব্যবহারেই উন্নতি।"
+  ];
+  let index = 0;
+  setInterval(() => {
+    document.getElementById('dynamic-quote').innerText = quotes[index];
+    index = (index + 1) % quotes.length;
+  }, 5000);
+</script>
