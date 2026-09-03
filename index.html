@@ -1,31 +1,57 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Digital Public Information • Awareness • Announcements">
+    <meta name="description" content="Gazole Block Digital Broadcast - Premium Citizen Services Information Portal">
     <title>Gazole Block Digital Broadcast - সরকারি প্রকল্পের তথ্য</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-    <!-- Background Image Implementation -->
-    <div class="bg-image"></div>
-    <div class="bg-overlay"></div>
+    <!-- Immersive Background Implementation -->
+    <div class="bg-wrapper">
+        <div class="bg-image"></div>
+        <div class="bg-gradient-overlay"></div>
+    </div>
 
-    <!-- Minimal Header -->
+    <!-- Floating Modern Header -->
     <header class="app-header">
         <div class="header-left">
             <div class="logo">
-                <span>📻</span> <div class="brand-text"><strong>GAZOLE BLOCK</strong><br>DIGITAL BROADCAST</div>
+                <span class="emblem">🏛️</span>
+                <div class="brand-text">
+                    <strong>GAZOLE BLOCK</strong>
+                    <span>Digital Broadcast</span>
+                </div>
             </div>
-            <div class="subtitle">শুনুন • জানুন • উপকৃত হন</div>
         </div>
-        <div class="header-right">
+
+        <div class="header-center">
             <div class="now-playing">
                 <div class="live-dot"></div>
-                <span>সরকারি প্রকল্পের তথ্য</span>
+                <span class="live-text">LIVE</span>
             </div>
+        </div>
+
+        <div class="header-right">
+            <nav class="nav-links">
+                <a href="#" class="nav-link">About</a>
+                <a href="#" class="nav-link" onclick="openModal(); return false;">Schemes List</a>
+                <a href="#" class="nav-link">Contact</a>
+            </nav>
+            <!-- Optional Dark Mode Toggle -->
+            <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
+                <span class="theme-icon">🌙</span>
+            </button>
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" aria-label="Menu" onclick="toggleMobileMenu()">
+                ☰
+            </button>
         </div>
     </header>
 
@@ -33,19 +59,25 @@
     <main class="main-container">
 
         <!-- Scheme Player Area -->
-        <div class="player-wrapper">
+        <div class="player-wrapper fade-in-up">
 
             <!-- Desktop Left Nav -->
-            <button class="nav-btn" onclick="prevScheme()">← পূর্ববর্তী</button>
+            <button class="nav-btn prev-btn" onclick="prevScheme()" aria-label="Previous Scheme">
+                <span class="nav-icon">←</span>
+            </button>
 
-            <!-- Main Scheme Card -->
-            <div class="scheme-card">
-                <div class="scheme-number" id="scheme-number">প্রকল্প ১ / ১০</div>
-                <div class="coming-soon-badge" id="coming-soon-badge" style="display: none;">অডিও শীঘ্রই আসছে</div>
+            <!-- Premium Main Scheme Card -->
+            <div class="scheme-card glass-panel" id="main-card">
+                <div class="card-header-top">
+                    <div class="scheme-number badge-gradient" id="scheme-number">প্রকল্প ১ / ৭</div>
+                    <button class="share-btn" onclick="shareScheme()" aria-label="Share">🔗</button>
+                </div>
 
-                <div class="scheme-icon" id="scheme-icon">🏠</div>
+                <div class="coming-soon-badge pulse-anim" id="coming-soon-badge" style="display: none;">অডিও শীঘ্রই আসছে</div>
 
-                <h2 class="scheme-title" id="scheme-title">প্রধানমন্ত্রী আবাস যোজনা (গ্রামীণ)</h2>
+                <div class="scheme-icon bounce-on-load" id="scheme-icon">🏠</div>
+
+                <h1 class="scheme-title text-gradient" id="scheme-title">প্রধানমন্ত্রী আবাস যোজনা (গ্রামীণ)</h1>
                 <p class="scheme-desc" id="scheme-desc">গ্রামীণ এলাকার দরিদ্র ও গৃহহীন পরিবারকে পাকা বাড়ি নির্মাণের জন্য আর্থিক সহায়তা।</p>
 
                 <div class="audio-duration">
@@ -54,7 +86,7 @@
 
                 <div class="progress-area">
                     <div class="progress-bar-bg" id="progress-bar-bg" onclick="seek(event)">
-                        <div class="progress-fill" id="progress-fill"></div>
+                        <div class="progress-fill gradient-fill" id="progress-fill"></div>
                     </div>
                     <div class="time-info">
                         <span id="current-time">0:00</span>
@@ -63,58 +95,78 @@
                 </div>
 
                 <div class="player-controls">
-                    <button class="ctrl-btn" onclick="skip(-10)" title="Previous 10s">↺ 10</button>
-                    <button class="play-pause-btn" id="main-play-btn" onclick="togglePlay()">▶</button>
-                    <button class="ctrl-btn" onclick="skip(10)" title="Next 10s">10 ↻</button>
+                    <button class="ctrl-btn skip-btn" onclick="skip(-10)" title="Previous 10s" aria-label="Rewind 10 seconds">
+                        <span>↺</span>
+                        <small>10</small>
+                    </button>
+                    <button class="play-pause-btn premium-play-btn" id="main-play-btn" onclick="togglePlay()" aria-label="Play or Pause">
+                        ▶
+                    </button>
+                    <button class="ctrl-btn skip-btn" onclick="skip(10)" title="Next 10s" aria-label="Skip 10 seconds">
+                        <small>10</small>
+                        <span>↻</span>
+                    </button>
                 </div>
             </div>
 
             <!-- Desktop Right Nav -->
-            <button class="nav-btn" onclick="nextScheme()">পরবর্তী →</button>
+            <button class="nav-btn next-btn" onclick="nextScheme()" aria-label="Next Scheme">
+                <span class="nav-icon">→</span>
+            </button>
         </div>
 
     </main>
 
-    <!-- Fixed Bottom Player -->
-    <div class="bottom-player">
+    <!-- Modern Media Control Bar -->
+    <div class="bottom-player glass-panel-dark">
         <div class="bp-left">
-            <div class="bp-icon">📻</div>
+            <div class="bp-mini-icon" id="bp-mini-icon">🏠</div>
             <div class="bp-left-info">
+                <span class="bp-title" id="bp-title">প্রধানমন্ত্রী আবাস যোজনা (গ্রামীণ)</span>
                 <span class="bp-brand">GAZOLE BLOCK DIGITAL BROADCAST</span>
-                <span class="bp-title" id="bp-title">সরকারি প্রকল্পের তথ্য</span>
             </div>
         </div>
 
         <div class="bp-center">
-            <button class="bp-ctrl-btn" onclick="skip(-10)">↺ 10</button>
-            <button class="bp-play-btn" id="bp-play-btn" onclick="togglePlay()">▶</button>
-            <button class="bp-ctrl-btn" onclick="skip(10)">10 ↻</button>
+            <button class="bp-ctrl-btn" onclick="prevScheme()" aria-label="Previous Scheme">⏮</button>
+            <button class="bp-play-btn" id="bp-play-btn" onclick="togglePlay()" aria-label="Play or Pause">▶</button>
+            <button class="bp-ctrl-btn" onclick="nextScheme()" aria-label="Next Scheme">⏭</button>
+
+            <!-- Visualizer (Animated bars shown when playing) -->
+            <div class="visualizer" id="visualizer">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
         </div>
 
         <div class="bp-right">
             <div class="bp-volume">
                 <span>🔊</span>
-                <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="if(player && player.setVolume) player.setVolume(this.value)">
+                <input type="range" class="volume-slider custom-slider" min="0" max="100" value="100" onchange="if(player && player.setVolume) player.setVolume(this.value)" aria-label="Volume">
             </div>
-            <button class="bp-list-btn" onclick="openModal()">
-                <span>☰</span> স্কিম তালিকা
+            <button class="bp-list-btn premium-btn" onclick="openModal()">
+                <span>☰</span> View All Schemes
             </button>
         </div>
     </div>
 
-
-    <!-- Scheme Selection Modal -->
+    <!-- Premium Scheme Selection Modal -->
     <div class="modal-overlay" id="scheme-modal">
-        <div class="modal-content">
+        <div class="modal-content glass-modal scale-in">
             <div class="modal-header">
-                <h2>প্রকল্প তালিকা</h2>
-                <button class="close-modal" onclick="closeModal()">×</button>
+                <h2>সকল সরকারি প্রকল্প</h2>
+                <button class="close-modal icon-btn" onclick="closeModal()" aria-label="Close Modal">✕</button>
             </div>
-            <div class="modal-body" id="modal-scheme-list">
+            <div class="modal-body modal-grid" id="modal-scheme-list">
                 <!-- List items populated by JS -->
             </div>
         </div>
     </div>
+
+    <!-- Notification Toast -->
+    <div id="toast-container" class="toast-container"></div>
 
     <!-- Hidden YouTube Player -->
     <div id="youtube-player"></div>
