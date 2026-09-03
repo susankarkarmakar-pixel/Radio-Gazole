@@ -5,135 +5,200 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Radio- Gazole Block</title>
     <style>
-        /* রেট্রো রেডিও ডিজাইন (saloon.wtf স্টাইল) */
-        :root {
-            --bg-color: #f4e4bc;
-            --radio-bg: #2c241b;
-            --text-color: #fff8e7;
-            --accent-color: #d4a373;
-            --live-color: #ff4d4d;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            background-image: radial-gradient(#e6d5ac 1px, transparent 1px);
-            background-size: 20px 20px;
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            color: #333;
+            padding: 20px;
         }
 
         .radio-container {
-            background-color: var(--radio-bg);
-            border-radius: 20px;
-            padding: 25px;
-            width: 90%;
-            max-width: 800px;
-            box-shadow: 
-                0 15px 35px rgba(0,0,0,0.5),
-                inset 0 2px 5px rgba(255,255,255,0.1);
-            border: 4px solid #4a3f35;
-            text-align: center;
-            position: relative;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         .radio-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #4a3f35;
-            padding-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
+            text-align: center;
+            margin-bottom: 30px;
         }
 
         .radio-title {
-            color: var(--text-color);
-            font-size: 1.8rem;
+            font-size: 2rem;
+            color: #333;
             font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-shadow: 2px 2px 0px #000;
+            margin-bottom: 10px;
         }
 
-        .live-indicator {
-            display: flex;
+        .live-badge {
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: #1a1510;
-            padding: 8px 15px;
+            background: #ff4757;
+            color: white;
+            padding: 6px 16px;
             border-radius: 20px;
-            border: 1px solid #4a3f35;
+            font-size: 0.85rem;
+            font-weight: 600;
         }
 
         .live-dot {
-            width: 12px;
-            height: 12px;
-            background-color: var(--live-color);
+            width: 8px;
+            height: 8px;
+            background: white;
             border-radius: 50%;
             animation: pulse 1.5s infinite;
         }
 
-        .live-text {
-            color: var(--text-color);
-            font-size: 0.9rem;
-            font-weight: bold;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
-        /* ভিডিও রেসপন্সিভ র‍্যাপার */
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
+        .player-card {
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+        }
+
+        .album-art {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 25px;
+            border-radius: 15px;
             overflow: hidden;
-            border-radius: 12px;
-            border: 3px solid #4a3f35;
-            background: #000;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
 
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .album-art img {
             width: 100%;
             height: 100%;
-            border: none;
+            object-fit: cover;
         }
 
-        .quote-box {
-            margin-top: 25px;
-            background: #1a1510;
-            color: var(--accent-color);
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #4a3f35;
-            font-size: 1.1rem;
-            min-height: 50px;
+        .track-info {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .track-title {
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .track-artist {
+            color: #a0a0a0;
+            font-size: 0.95rem;
+        }
+
+        .progress-container {
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #333;
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            color: #a0a0a0;
+            font-size: 0.8rem;
+            margin-top: 8px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .control-btn {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .play-btn {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .quote-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border-left: 4px solid #667eea;
+        }
+
+        .quote-text {
+            color: #555;
             font-style: italic;
-            transition: opacity 0.5s ease-in-out;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 77, 77, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
+        /* YouTube iframe লুকানো */
+        #youtube-player {
+            position: absolute;
+            top: -9999px;
+            visibility: hidden;
         }
 
-        /* মোবাইল রেসপন্সিভ */
         @media (max-width: 600px) {
-            .radio-title { font-size: 1.2rem; }
-            .radio-container { padding: 15px; width: 95%; }
-            .radio-header { justify-content: center; }
+            .radio-container {
+                padding: 25px;
+            }
+            .album-art {
+                width: 150px;
+                height: 150px;
+            }
+            .radio-title {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -141,44 +206,139 @@
 
     <div class="radio-container">
         <div class="radio-header">
-            <div class="radio-title">📻 Radio- Gazole Block</div>
-            <div class="live-indicator">
+            <h1 class="radio-title"> RADIO- GAZOLE BLOCK</h1>
+            <div class="live-badge">
                 <div class="live-dot"></div>
-                <span class="live-text"><span id="listener-count">24</span> শ্রোতা অনলাইন</span>
+                <span><span id="listener-count">32</span> শ্রোতা অনলাইন</span>
             </div>
         </div>
 
-        <div class="video-wrapper">
-            <!-- আপনার YouTube ভিডিও এমবেড কোড -->
-            <iframe 
-                src="https://www.youtube.com/embed/v3gwlHi1J6A" 
-                title="ভাতার Status ও Payment Status মোবাইলে কীভাবে দেখবেন? | SAMARTH Portal | West Bengal" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                referrerpolicy="strict-origin-when-cross-origin" 
-                allowfullscreen>
-            </iframe>
+        <div class="player-card">
+            <div class="album-art">
+                <img src="https://i.ytimg.com/vi/v3gwlHi1J6A/maxresdefault.jpg" alt="Album Art" id="album-img">
+            </div>
+
+            <div class="track-info">
+                <div class="track-title" id="track-title">ভাতার Status ও Payment Status</div>
+                <div class="track-artist" id="track-artist">Gazole BDO Office</div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+                <div class="time-display">
+                    <span id="current-time">0:00</span>
+                    <span id="duration">0:00</span>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="control-btn" onclick="previousTrack()">⏮</button>
+                <button class="control-btn play-btn" id="play-btn" onclick="togglePlay()">▶</button>
+                <button class="control-btn" onclick="nextTrack()">⏭</button>
+            </div>
         </div>
 
-        <div class="quote-box">
-            <span id="dynamic-quote">"গাজোল ব্লকের আপডেট এবং তথ্যের একমাত্র ঠিকানা..."</span>
+        <div class="quote-section">
+            <p class="quote-text" id="dynamic-quote">"SAMARTH Portal এবং সরকারি সুবিধার খবর সবার আগে..."</p>
         </div>
     </div>
 
+    <!-- লুকানো YouTube Player -->
+    <div id="youtube-player"></div>
+
     <script>
-        // লাইভ শ্রোতার সংখ্যা র‍্যান্ডমলি পরিবর্তন হবে (১৫ থেকে ৬০ এর মধ্যে)
-        function updateListeners() {
-            const count = Math.floor(Math.random() * (60 - 15 + 1)) + 15;
-            document.getElementById('listener-count').innerText = count;
+        // YouTube Iframe API লোড করা
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        var isPlaying = false;
+        var updateInterval;
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                height: '0',
+                width: '0',
+                videoId: 'v3gwlHi1J6A', // আপনার YouTube ভিডিও ID
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
         }
-        setInterval(updateListeners, 5000); // প্রতি ৫ সেকেন্ডে আপডেট
+
+        function onPlayerReady(event) {
+            document.getElementById('duration').textContent = formatTime(player.getDuration());
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING) {
+                isPlaying = true;
+                document.getElementById('play-btn').innerHTML = '⏸';
+                startProgressUpdate();
+            } else {
+                isPlaying = false;
+                document.getElementById('play-btn').innerHTML = '▶';
+                stopProgressUpdate();
+            }
+        }
+
+        function togglePlay() {
+            if (isPlaying) {
+                player.pauseVideo();
+            } else {
+                player.playVideo();
+            }
+        }
+
+        function startProgressUpdate() {
+            updateInterval = setInterval(updateProgress, 1000);
+        }
+
+        function stopProgressUpdate() {
+            clearInterval(updateInterval);
+        }
+
+        function updateProgress() {
+            if (player && player.getCurrentTime) {
+                var currentTime = player.getCurrentTime();
+                var duration = player.getDuration();
+                var progress = (currentTime / duration) * 100;
+                
+                document.getElementById('progress').style.width = progress + '%';
+                document.getElementById('current-time').textContent = formatTime(currentTime);
+            }
+        }
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            var mins = Math.floor(seconds / 60);
+            var secs = Math.floor(seconds % 60);
+            return mins + ':' + (secs < 10 ? '0' : '') + secs;
+        }
+
+        // শ্রোতা সংখ্যা আপডেট
+        function updateListeners() {
+            const count = Math.floor(Math.random() * (50 - 20 + 1)) + 20;
+            document.getElementById('listener-count').textContent = count;
+        }
+        setInterval(updateListeners, 5000);
         updateListeners();
 
-        // উক্তি পরিবর্তন করার স্ক্রিপ্ট
+        // উক্তি পরিবর্তন
         const quotes = [
+            "SAMARTH Portal এবং সরকারি সুবিধার খবর সবার আগে...",
             "গাজোল ব্লকের আপডেট এবং তথ্যের একমাত্র ঠিকানা...",
-            "সঠিক তথ্য, সঠিক সময়ে, আপনার মোবাইলে।",
-            "SAMARTH Portal এবং সরকারি সুবিধার খবর সবার আগে।",
-            "রেডিও গাজোল ব্লকে আপনাকে স্বাগতম! রেডিওর আড্ডায় মেতে উঠুন।"
+            "সঠিক তথ্য, সঠিক সময়ে, আপনার মোবাইলে...",
+            "রেডিও গাজোল ব্লকে আপনাকে স্বাগতম!"
         ];
         let quoteIndex = 0;
         
@@ -187,10 +347,22 @@
             quoteElement.style.opacity = 0;
             setTimeout(() => {
                 quoteIndex = (quoteIndex + 1) % quotes.length;
-                quoteElement.innerText = `"${quotes[quoteIndex]}"`;
+                quoteElement.textContent = '"' + quotes[quoteIndex] + '"';
                 quoteElement.style.opacity = 1;
             }, 500);
-        }, 6000); // প্রতি ৬ সেকেন্ডে উক্তি পরিবর্তন
+        }, 6000);
+
+        function previousTrack() {
+            if (player && player.previousVideo) {
+                player.previousVideo();
+            }
+        }
+
+        function nextTrack() {
+            if (player && player.nextVideo) {
+                player.nextVideo();
+            }
+        }
     </script>
 </body>
 </html>
