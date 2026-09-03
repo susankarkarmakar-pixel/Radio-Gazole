@@ -11,12 +11,12 @@ const schemes = [
     },
     {
         id: 2,
-        title: "লক্ষ্মীর ভাণ্ডার",
+        title: "Annapurna Yojana",
         description: "মহিলাদের স্বনির্ভর করতে মাসিক আর্থিক অনুদান প্রকল্প।",
         icon: "💰",
         videoId: null,
         durationText: "--",
-        shortName: "লক্ষ্মীর ভাণ্ডার"
+        shortName: "Annapurna Yojana"
     },
     {
         id: 3,
@@ -47,12 +47,12 @@ const schemes = [
     },
     {
         id: 6,
-        title: "স্বাস্থ্য সাথী",
+        title: "Ayushman Card",
         description: "প্রতিটি পরিবারকে বছরে ৫ লক্ষ টাকা পর্যন্ত বিনামূল্যে চিকিৎসার সুবিধা।",
         icon: "❤️",
         videoId: null,
         durationText: "--",
-        shortName: "স্বাস্থ্য সাথী"
+        shortName: "Ayushman Card"
     },
     {
         id: 7,
