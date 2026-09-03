@@ -426,4 +426,17 @@ function toggleMobileMenu() {
 }
 
 // Initialize on load
-document.addEventListener('DOMContentLoaded', initApp);
+document.addEventListener('DOMContentLoaded', () => {
+    initApp();
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js')
+            .then(registration => {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            })
+            .catch(error => {
+                console.error('ServiceWorker registration failed: ', error);
+            });
+    }
+});
