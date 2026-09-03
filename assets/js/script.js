@@ -117,8 +117,6 @@ function onPlayerStateChange(event) {
 
 function initApp() {
     renderScheme();
-    renderDots();
-    renderQuickSelect();
     renderModalList();
 }
 
@@ -224,8 +222,6 @@ function loadScheme(index) {
 
     // Update UI
     renderScheme();
-    updateDots();
-    updateQuickSelect();
     renderModalList();
 }
 

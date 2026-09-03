@@ -124,24 +124,24 @@ body {
     margin-bottom: 20px;
 }
 
+
 .nav-btn {
-    background: none;
-    border: none;
-    color: var(--secondary-text);
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--border-color);
+    padding: 15px 25px;
+    border-radius: 30px;
     font-size: 1.1rem;
+    color: var(--primary-saffron);
     cursor: pointer;
-    padding: 10px 20px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    transition: all 0.2s ease;
     font-weight: 600;
+    backdrop-filter: blur(10px);
 }
 
 .nav-btn:hover {
-    color: var(--primary-saffron);
-    background-color: var(--light-saffron);
+    background: var(--white);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(245, 124, 0, 0.2);
 }
 
 .scheme-card {
@@ -485,23 +485,40 @@ body {
     .player-wrapper {
         flex-direction: column;
         gap: 20px;
+        align-items: center;
     }
 
-    .nav-btn {
-        display: none;
+    /* Move the previous button below the card on mobile by changing flex order */
+    .player-wrapper button:first-child {
+        order: 2;
     }
 
-    .mobile-nav {
-        display: flex;
-        justify-content: space-between;
+.nav-btn {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--border-color);
+    padding: 15px 25px;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    color: var(--primary-saffron);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+}
+
+.nav-btn:hover {
+    background: var(--white);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(245, 124, 0, 0.2);
+}
+
+.scheme-card {
+        order: 1;
         width: 100%;
-        max-width: 500px;
-        margin-top: 10px;
-        margin-bottom: 20px;
+        padding: 30px 20px;
     }
-
-    .mobile-nav .nav-btn {
-        display: flex;
+    .player-wrapper button:last-child {
+        order: 3;
     }
 
     .bottom-player {
@@ -520,18 +537,7 @@ body {
         justify-content: space-between;
         width: 100%;
     }
-
-    .scheme-card {
-        padding: 30px 20px;
-    }
 }
-
-@media (min-width: 769px) {
-    .mobile-nav {
-        display: none;
-    }
-}
-
 
 /* Modal Styling */
 .modal-overlay {

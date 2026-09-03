@@ -31,17 +31,11 @@
     <!-- Main Content -->
     <main class="main-container">
 
-        <!-- Mobile Navigation Top -->
-        <div class="mobile-nav">
-            <button class="nav-btn" onclick="prevScheme()">← পূর্ববর্তী</button>
-            <button class="nav-btn" onclick="nextScheme()">পরবর্তী →</button>
-        </div>
-
         <!-- Scheme Player Area -->
         <div class="player-wrapper">
 
             <!-- Desktop Left Nav -->
-            <button class="nav-btn desktop-nav" onclick="prevScheme()">← পূর্ববর্তী</button>
+            <button class="nav-btn" onclick="prevScheme()">← পূর্ববর্তী</button>
 
             <!-- Main Scheme Card -->
             <div class="scheme-card">
@@ -75,20 +69,7 @@
             </div>
 
             <!-- Desktop Right Nav -->
-            <button class="nav-btn desktop-nav" onclick="nextScheme()">পরবর্তী →</button>
-        </div>
-
-        <!-- Scheme Progress Indicator -->
-        <div class="scheme-dots" id="scheme-dots">
-            <!-- Dots will be populated by JS -->
-        </div>
-
-        <!-- Quick Scheme Selection -->
-        <div class="quick-selection">
-            <h3>অন্যান্য প্রকল্পসমূহ</h3>
-            <div class="shortcuts-container" id="shortcuts-container">
-                <!-- Shortcuts will be populated by JS -->
-            </div>
+            <button class="nav-btn" onclick="nextScheme()">পরবর্তী →</button>
         </div>
 
     </main>
