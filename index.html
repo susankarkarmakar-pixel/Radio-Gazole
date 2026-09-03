@@ -46,6 +46,7 @@
             <!-- Main Scheme Card -->
             <div class="scheme-card">
                 <div class="scheme-number" id="scheme-number">প্রকল্প ১ / ১০</div>
+                <div class="coming-soon-badge" id="coming-soon-badge" style="display: none;">অডিও শীঘ্রই আসছে</div>
 
                 <div class="scheme-icon" id="scheme-icon">🏠</div>
 
@@ -113,9 +114,23 @@
                 <span>🔊</span>
                 <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="if(player && player.setVolume) player.setVolume(this.value)">
             </div>
-            <button class="bp-list-btn" onclick="alert('তালিকা ফিচার শীঘ্রই আসছে!')">
+            <button class="bp-list-btn" onclick="openModal()">
                 <span>☰</span> স্কিম তালিকা
             </button>
+        </div>
+    </div>
+
+
+    <!-- Scheme Selection Modal -->
+    <div class="modal-overlay" id="scheme-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>প্রকল্প তালিকা</h2>
+                <button class="close-modal" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body" id="modal-scheme-list">
+                <!-- List items populated by JS -->
+            </div>
         </div>
     </div>
 
