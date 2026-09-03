@@ -3,366 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Radio- Gazole Block</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .radio-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px;
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        .radio-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .radio-title {
-            font-size: 2rem;
-            color: #333;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .live-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: #ff4757;
-            color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            background: white;
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .player-card {
-            background: #1a1a2e;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 20px;
-        }
-
-        .album-art {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 25px;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .album-art img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .track-info {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .track-title {
-            color: #fff;
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .track-artist {
-            color: #a0a0a0;
-            font-size: 0.95rem;
-        }
-
-        .progress-container {
-            margin-bottom: 20px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #333;
-            border-radius: 3px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .progress {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 3px;
-            width: 0%;
-            transition: width 0.1s;
-        }
-
-        .time-display {
-            display: flex;
-            justify-content: space-between;
-            color: #a0a0a0;
-            font-size: 0.8rem;
-            margin-top: 8px;
-        }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .control-btn {
-            background: none;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .control-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .play-btn {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .quote-section {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            border-left: 4px solid #667eea;
-        }
-
-        .quote-text {
-            color: #555;
-            font-style: italic;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        /* YouTube iframe লুকানো */
-        #youtube-player {
-            position: absolute;
-            top: -9999px;
-            visibility: hidden;
-        }
-
-        @media (max-width: 600px) {
-            .radio-container {
-                padding: 25px;
-            }
-            .album-art {
-                width: 150px;
-                height: 150px;
-            }
-            .radio-title {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+    <title>Radio Gazole - সরকারি প্রকল্পের তথ্য</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-    <div class="radio-container">
-        <div class="radio-header">
-            <h1 class="radio-title"> RADIO- GAZOLE BLOCK</h1>
-            <div class="live-badge">
+    <!-- Background Image Implementation -->
+    <div class="bg-image"></div>
+    <div class="bg-overlay"></div>
+
+    <!-- Minimal Header -->
+    <header class="app-header">
+        <div class="header-left">
+            <div class="logo">
+                <span>📻</span> RADIO GAZOLE
+            </div>
+            <div class="subtitle">"শুনুন, জানুন, উপকৃত হন"</div>
+        </div>
+        <div class="header-right">
+            <div class="now-playing">
                 <div class="live-dot"></div>
-                <span><span id="listener-count">32</span> শ্রোতা অনলাইন</span>
+                <span>সরকারি প্রকল্পের তথ্য</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+
+        <!-- Mobile Navigation Top -->
+        <div class="mobile-nav">
+            <button class="nav-btn" onclick="prevScheme()">← পূর্ববর্তী</button>
+            <button class="nav-btn" onclick="nextScheme()">পরবর্তী →</button>
+        </div>
+
+        <!-- Scheme Player Area -->
+        <div class="player-wrapper">
+
+            <!-- Desktop Left Nav -->
+            <button class="nav-btn desktop-nav" onclick="prevScheme()">← পূর্ববর্তী</button>
+
+            <!-- Main Scheme Card -->
+            <div class="scheme-card">
+                <div class="scheme-number" id="scheme-number">প্রকল্প ১ / ১০</div>
+
+                <div class="scheme-icon" id="scheme-icon">🏠</div>
+
+                <h2 class="scheme-title" id="scheme-title">প্রধানমন্ত্রী আবাস যোজনা (গ্রামীণ)</h2>
+                <p class="scheme-desc" id="scheme-desc">গ্রামীণ এলাকার দরিদ্র ও গৃহহীন পরিবারকে পাকা বাড়ি নির্মাণের জন্য আর্থিক সহায়তা।</p>
+
+                <div class="audio-duration">
+                    <span>⏱</span> <span id="audio-duration-text">সময়কাল: ২ মিনিট ১৫ সেকেন্ড</span>
+                </div>
+
+                <div class="progress-area">
+                    <div class="progress-bar-bg" id="progress-bar-bg" onclick="seek(event)">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                    <div class="time-info">
+                        <span id="current-time">0:00</span>
+                        <span id="total-time">0:00</span>
+                    </div>
+                </div>
+
+                <div class="player-controls">
+                    <button class="ctrl-btn" onclick="skip(-10)" title="Previous 10s">↺ 10</button>
+                    <button class="play-pause-btn" id="main-play-btn" onclick="togglePlay()">▶</button>
+                    <button class="ctrl-btn" onclick="skip(10)" title="Next 10s">10 ↻</button>
+                </div>
+            </div>
+
+            <!-- Desktop Right Nav -->
+            <button class="nav-btn desktop-nav" onclick="nextScheme()">পরবর্তী →</button>
+        </div>
+
+        <!-- Scheme Progress Indicator -->
+        <div class="scheme-dots" id="scheme-dots">
+            <!-- Dots will be populated by JS -->
+        </div>
+
+        <!-- Quick Scheme Selection -->
+        <div class="quick-selection">
+            <h3>অন্যান্য প্রকল্পসমূহ</h3>
+            <div class="shortcuts-container" id="shortcuts-container">
+                <!-- Shortcuts will be populated by JS -->
             </div>
         </div>
 
-        <div class="player-card">
-            <div class="album-art">
-                <img src="https://i.ytimg.com/vi/v3gwlHi1J6A/maxresdefault.jpg" alt="Album Art" id="album-img">
-            </div>
+    </main>
 
-            <div class="track-info">
-                <div class="track-title" id="track-title">ভাতার Status ও Payment Status</div>
-                <div class="track-artist" id="track-artist">Gazole BDO Office</div>
-            </div>
-
-            <div class="progress-container">
-                <div class="progress-bar" id="progress-bar">
-                    <div class="progress" id="progress"></div>
-                </div>
-                <div class="time-display">
-                    <span id="current-time">0:00</span>
-                    <span id="duration">0:00</span>
-                </div>
-            </div>
-
-            <div class="controls">
-                <button class="control-btn" onclick="previousTrack()">⏮</button>
-                <button class="control-btn play-btn" id="play-btn" onclick="togglePlay()">▶</button>
-                <button class="control-btn" onclick="nextTrack()">⏭</button>
+    <!-- Fixed Bottom Player -->
+    <div class="bottom-player">
+        <div class="bp-left">
+            <div class="bp-icon">📻</div>
+            <div class="bp-left-info">
+                <span class="bp-brand">RADIO GAZOLE</span>
+                <span class="bp-title" id="bp-title">সরকারি প্রকল্পের তথ্য</span>
             </div>
         </div>
 
-        <div class="quote-section">
-            <p class="quote-text" id="dynamic-quote">"SAMARTH Portal এবং সরকারি সুবিধার খবর সবার আগে..."</p>
+        <div class="bp-center">
+            <button class="bp-ctrl-btn" onclick="skip(-10)">↺ 10</button>
+            <button class="bp-play-btn" id="bp-play-btn" onclick="togglePlay()">▶</button>
+            <button class="bp-ctrl-btn" onclick="skip(10)">10 ↻</button>
+        </div>
+
+        <div class="bp-right">
+            <div class="bp-volume">
+                <span>🔊</span>
+                <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="if(player && player.setVolume) player.setVolume(this.value)">
+            </div>
+            <button class="bp-list-btn" onclick="alert('তালিকা ফিচার শীঘ্রই আসছে!')">
+                <span>☰</span> স্কিম তালিকা
+            </button>
         </div>
     </div>
 
-    <!-- লুকানো YouTube Player -->
+    <!-- Hidden YouTube Player -->
     <div id="youtube-player"></div>
 
-    <script>
-        // YouTube Iframe API লোড করা
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        var player;
-        var isPlaying = false;
-        var updateInterval;
-
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtube-player', {
-                height: '0',
-                width: '0',
-                videoId: 'v3gwlHi1J6A', // আপনার YouTube ভিডিও ID
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 0
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            document.getElementById('duration').textContent = formatTime(player.getDuration());
-        }
-
-        function onPlayerStateChange(event) {
-            if (event.data == YT.PlayerState.PLAYING) {
-                isPlaying = true;
-                document.getElementById('play-btn').innerHTML = '⏸';
-                startProgressUpdate();
-            } else {
-                isPlaying = false;
-                document.getElementById('play-btn').innerHTML = '▶';
-                stopProgressUpdate();
-            }
-        }
-
-        function togglePlay() {
-            if (isPlaying) {
-                player.pauseVideo();
-            } else {
-                player.playVideo();
-            }
-        }
-
-        function startProgressUpdate() {
-            updateInterval = setInterval(updateProgress, 1000);
-        }
-
-        function stopProgressUpdate() {
-            clearInterval(updateInterval);
-        }
-
-        function updateProgress() {
-            if (player && player.getCurrentTime) {
-                var currentTime = player.getCurrentTime();
-                var duration = player.getDuration();
-                var progress = (currentTime / duration) * 100;
-                
-                document.getElementById('progress').style.width = progress + '%';
-                document.getElementById('current-time').textContent = formatTime(currentTime);
-            }
-        }
-
-        function formatTime(seconds) {
-            if (isNaN(seconds)) return '0:00';
-            var mins = Math.floor(seconds / 60);
-            var secs = Math.floor(seconds % 60);
-            return mins + ':' + (secs < 10 ? '0' : '') + secs;
-        }
-
-        // শ্রোতা সংখ্যা আপডেট
-        function updateListeners() {
-            const count = Math.floor(Math.random() * (50 - 20 + 1)) + 20;
-            document.getElementById('listener-count').textContent = count;
-        }
-        setInterval(updateListeners, 5000);
-        updateListeners();
-
-        // উক্তি পরিবর্তন
-        const quotes = [
-            "SAMARTH Portal এবং সরকারি সুবিধার খবর সবার আগে...",
-            "গাজোল ব্লকের আপডেট এবং তথ্যের একমাত্র ঠিকানা...",
-            "সঠিক তথ্য, সঠিক সময়ে, আপনার মোবাইলে...",
-            "রেডিও গাজোল ব্লকে আপনাকে স্বাগতম!"
-        ];
-        let quoteIndex = 0;
-        
-        setInterval(() => {
-            const quoteElement = document.getElementById('dynamic-quote');
-            quoteElement.style.opacity = 0;
-            setTimeout(() => {
-                quoteIndex = (quoteIndex + 1) % quotes.length;
-                quoteElement.textContent = '"' + quotes[quoteIndex] + '"';
-                quoteElement.style.opacity = 1;
-            }, 500);
-        }, 6000);
-
-        function previousTrack() {
-            if (player && player.previousVideo) {
-                player.previousVideo();
-            }
-        }
-
-        function nextTrack() {
-            if (player && player.nextVideo) {
-                player.nextVideo();
-            }
-        }
-    </script>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>

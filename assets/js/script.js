@@ -1,0 +1,290 @@
+// Scheme Data Structure
+const schemes = [
+    {
+        id: 1,
+        title: "প্রধানমন্ত্রী আবাস যোজনা (গ্রামীণ)",
+        description: "গ্রামীণ এলাকার দরিদ্র ও গৃহহীন পরিবারকে পাকা বাড়ি নির্মাণের জন্য আর্থিক সহায়তা।",
+        icon: "🏠",
+        videoId: "v3gwlHi1J6A", // Using existing video ID as placeholder
+        durationText: "২ মিনিট ১৫ সেকেন্ড",
+        shortName: "আবাস যোজনা"
+    },
+    {
+        id: 2,
+        title: "কন্যাশ্রী প্রকল্প",
+        description: "বাল্যবিবাহ রোধ এবং মেয়েদের শিক্ষার প্রসারে আর্থিক অনুদান।",
+        icon: "👩",
+        videoId: "v3gwlHi1J6A", // Reusing video ID for demonstration
+        durationText: "১ মিনিট ৩০ সেকেন্ড",
+        shortName: "কন্যাশ্রী"
+    },
+    {
+        id: 3,
+        title: "কৃষক বন্ধু প্রকল্প",
+        description: "কৃষকদের আর্থ-সামাজিক উন্নয়ন ও কৃষি কাজে সহায়তার জন্য অনুদান।",
+        icon: "👨‍🌾",
+        videoId: "v3gwlHi1J6A", // Reusing video ID for demonstration
+        durationText: "২ মিনিট ০০ সেকেন্ড",
+        shortName: "কৃষক বন্ধু"
+    },
+    {
+        id: 4,
+        title: "স্বাস্থ্য সাথী",
+        description: "প্রতিটি পরিবারকে বছরে ৫ লক্ষ টাকা পর্যন্ত বিনামূল্যে চিকিৎসার সুবিধা।",
+        icon: "❤️",
+        videoId: "v3gwlHi1J6A", // Reusing video ID for demonstration
+        durationText: "১ মিনিট ৪৫ সেকেন্ড",
+        shortName: "স্বাস্থ্য সাথী"
+    },
+    {
+        id: 5,
+        title: "বিধবা ভাতা",
+        description: "দরিদ্র ও অসহায় বিধবা মহিলাদের জন্য মাসিক আর্থিক অনুদান।",
+        icon: "👵",
+        videoId: "v3gwlHi1J6A", // Reusing video ID for demonstration
+        durationText: "২ মিনিট ১০ সেকেন্ড",
+        shortName: "বিধবা ভাতা"
+    }
+];
+
+let currentSchemeIndex = 0;
+let player;
+let isPlaying = false;
+let updateInterval;
+
+// Load YouTube Iframe API
+const tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+const firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player('youtube-player', {
+        height: '0',
+        width: '0',
+        videoId: schemes[currentSchemeIndex].videoId,
+        playerVars: {
+            'autoplay': 0,
+            'controls': 0,
+            'rel': 0,
+            'modestbranding': 1
+        },
+        events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+        }
+    });
+}
+
+function onPlayerReady(event) {
+    updateTimeDisplay();
+}
+
+function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.PLAYING) {
+        isPlaying = true;
+        updatePlayPauseIcons(true);
+        startProgressUpdate();
+    } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+        isPlaying = false;
+        updatePlayPauseIcons(false);
+        stopProgressUpdate();
+    }
+}
+
+function initApp() {
+    renderScheme();
+    renderDots();
+    renderQuickSelect();
+}
+
+function updatePlayPauseIcons(playing) {
+    const mainPlayBtn = document.getElementById('main-play-btn');
+    const bottomPlayBtn = document.getElementById('bp-play-btn');
+    const icon = playing ? '⏸' : '▶';
+
+    if (mainPlayBtn) mainPlayBtn.innerHTML = icon;
+    if (bottomPlayBtn) bottomPlayBtn.innerHTML = icon;
+}
+
+function togglePlay() {
+    if (!player || !player.playVideo) return;
+
+    if (isPlaying) {
+        player.pauseVideo();
+    } else {
+        player.playVideo();
+    }
+}
+
+function skip(seconds) {
+    if (!player || !player.getCurrentTime) return;
+    const currentTime = player.getCurrentTime();
+    player.seekTo(currentTime + seconds, true);
+}
+
+function startProgressUpdate() {
+    updateInterval = setInterval(updateProgress, 500);
+}
+
+function stopProgressUpdate() {
+    clearInterval(updateInterval);
+}
+
+function updateProgress() {
+    if (player && player.getCurrentTime && player.getDuration) {
+        const currentTime = player.getCurrentTime();
+        const duration = player.getDuration();
+
+        if (duration > 0) {
+            const progress = (currentTime / duration) * 100;
+            document.getElementById('progress-fill').style.width = progress + '%';
+            document.getElementById('current-time').textContent = formatTime(currentTime);
+            document.getElementById('total-time').textContent = formatTime(duration);
+        }
+    }
+}
+
+function updateTimeDisplay() {
+    if (player && player.getDuration) {
+        const duration = player.getDuration();
+        document.getElementById('total-time').textContent = formatTime(duration);
+    }
+}
+
+function formatTime(seconds) {
+    if (isNaN(seconds)) return '0:00';
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return mins + ':' + (secs < 10 ? '0' : '') + secs;
+}
+
+function loadScheme(index) {
+    if (index < 0 || index >= schemes.length) return;
+
+    const wasPlaying = isPlaying;
+    currentSchemeIndex = index;
+
+    // Load new video if player is ready
+    if (player && player.loadVideoById) {
+        player.loadVideoById(schemes[currentSchemeIndex].videoId);
+        if (!wasPlaying) {
+            player.pauseVideo(); // loadVideoById auto-plays, pause if we weren't playing
+        }
+    }
+
+    // Update UI
+    renderScheme();
+    updateDots();
+    updateQuickSelect();
+}
+
+function nextScheme() {
+    let nextIndex = currentSchemeIndex + 1;
+    if (nextIndex >= schemes.length) {
+        nextIndex = 0; // Loop back to start
+    }
+    loadScheme(nextIndex);
+}
+
+function prevScheme() {
+    let prevIndex = currentSchemeIndex - 1;
+    if (prevIndex < 0) {
+        prevIndex = schemes.length - 1; // Loop back to end
+    }
+    loadScheme(prevIndex);
+}
+
+function renderScheme() {
+    const scheme = schemes[currentSchemeIndex];
+
+    document.getElementById('scheme-number').textContent = `প্রকল্প ${currentSchemeIndex + 1} / ${schemes.length}`;
+    document.getElementById('scheme-icon').textContent = scheme.icon;
+    document.getElementById('scheme-title').textContent = scheme.title;
+    document.getElementById('scheme-desc').textContent = scheme.description;
+    document.getElementById('audio-duration-text').textContent = `সময়কাল: ${scheme.durationText}`;
+
+    // Bottom player updates
+    document.getElementById('bp-title').textContent = scheme.title;
+
+    // Reset progress
+    document.getElementById('progress-fill').style.width = '0%';
+    document.getElementById('current-time').textContent = '0:00';
+}
+
+function renderDots() {
+    const dotsContainer = document.getElementById('scheme-dots');
+    dotsContainer.innerHTML = '';
+
+    schemes.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = `dot ${index === currentSchemeIndex ? 'active' : ''}`;
+        dot.onclick = () => loadScheme(index);
+        dotsContainer.appendChild(dot);
+    });
+}
+
+function updateDots() {
+    const dots = document.querySelectorAll('.dot');
+    dots.forEach((dot, index) => {
+        if (index === currentSchemeIndex) {
+            dot.classList.add('active');
+        } else {
+            dot.classList.remove('active');
+        }
+    });
+}
+
+function renderQuickSelect() {
+    const container = document.getElementById('shortcuts-container');
+    container.innerHTML = '';
+
+    // Only show first 4 schemes as shortcuts + "See All"
+    const displaySchemes = schemes.slice(0, 4);
+
+    displaySchemes.forEach((scheme, index) => {
+        const btn = document.createElement('button');
+        btn.className = `shortcut-btn ${index === currentSchemeIndex ? 'active' : ''}`;
+        btn.innerHTML = `<span>${scheme.icon}</span> ${scheme.shortName}`;
+        btn.onclick = () => loadScheme(index);
+        container.appendChild(btn);
+    });
+
+    // Add "See All" button
+    const seeAllBtn = document.createElement('button');
+    seeAllBtn.className = 'shortcut-btn';
+    seeAllBtn.innerHTML = `<span>▦</span> সব দেখুন`;
+    seeAllBtn.onclick = () => alert("All schemes list feature coming soon!");
+    container.appendChild(seeAllBtn);
+}
+
+function updateQuickSelect() {
+    const buttons = document.querySelectorAll('.shortcuts-container .shortcut-btn');
+    buttons.forEach((btn, index) => {
+        // Skip the "See All" button
+        if (index < 4) {
+            if (index === currentSchemeIndex) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        }
+    });
+}
+
+// Progress Bar clicking
+function seek(event) {
+    if (!player || !player.getDuration) return;
+
+    const progressBar = document.getElementById('progress-bar-bg');
+    const rect = progressBar.getBoundingClientRect();
+    const pos = (event.clientX - rect.left) / progressBar.offsetWidth;
+    const duration = player.getDuration();
+
+    if (duration > 0) {
+        player.seekTo(pos * duration, true);
+    }
+}
+
+// Initialize on load
+document.addEventListener('DOMContentLoaded', initApp);

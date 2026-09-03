@@ -1,0 +1,4 @@
+127.0.0.1 - - [03/Sep/2026 11:47:55] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [03/Sep/2026 11:47:55] "GET /assets/css/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [03/Sep/2026 11:47:55] "GET /assets/js/script.js HTTP/1.1" 200 -
+127.0.0.1 - - [03/Sep/2026 11:47:55] "GET /assets/images/background.png HTTP/1.1" 200 -
