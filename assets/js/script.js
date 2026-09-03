@@ -5,7 +5,7 @@ const schemes = [
         title: "সামাজিক সুরক্ষা ভাতা",
         description: "বয়স্ক, বিধবা ও বিশেষ চাহিদা সম্পন্ন নাগরিকদের জন্য মাসিক আর্থিক অনুদান।",
         icon: "👵",
-        videoId: "v3gwlHi1J6A", // Only this scheme has the video ID
+        videoId: "v3gwlHi1J6A",
         durationText: "২ মিনিট ১৫ সেকেন্ড",
         shortName: "সুরক্ষা ভাতা"
     },
@@ -78,8 +78,7 @@ const firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 function onYouTubeIframeAPIReady() {
-    // Only initialize player with valid videoId
-    const initialVideoId = schemes[currentSchemeIndex].videoId || 'v3gwlHi1J6A'; // default fallback for init
+    const initialVideoId = schemes[currentSchemeIndex].videoId || 'v3gwlHi1J6A';
 
     player = new YT.Player('youtube-player', {
         height: '0',
@@ -108,16 +107,25 @@ function onPlayerStateChange(event) {
         isPlaying = true;
         updatePlayPauseIcons(true);
         startProgressUpdate();
+        document.getElementById('visualizer').classList.add('active');
     } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
         isPlaying = false;
         updatePlayPauseIcons(false);
         stopProgressUpdate();
+        document.getElementById('visualizer').classList.remove('active');
     }
 }
 
 function initApp() {
+    initTheme();
     renderScheme();
     renderModalList();
+
+    // Theme Toggle Listener
+    const themeBtn = document.getElementById('theme-toggle');
+    if(themeBtn) {
+        themeBtn.addEventListener('click', toggleTheme);
+    }
 }
 
 function updatePlayPauseIcons(playing) {
@@ -132,7 +140,7 @@ function updatePlayPauseIcons(playing) {
 function togglePlay() {
     const scheme = schemes[currentSchemeIndex];
     if (!scheme.videoId) {
-        alert("এই প্রকল্পের অডিও শীঘ্রই আসছে!");
+        showToast("এই প্রকল্পের অডিও শীঘ্রই আসছে!");
         return;
     }
 
@@ -199,6 +207,18 @@ function formatTime(seconds) {
 function loadScheme(index) {
     if (index < 0 || index >= schemes.length) return;
 
+    // Add transition effect class
+    const card = document.getElementById('main-card');
+    const iconElement = document.getElementById('scheme-icon');
+
+    card.classList.remove('scheme-transition');
+    void card.offsetWidth; // trigger reflow
+    card.classList.add('scheme-transition');
+
+    iconElement.classList.remove('bounce-on-load');
+    void iconElement.offsetWidth;
+    iconElement.classList.add('bounce-on-load');
+
     const wasPlaying = isPlaying;
     currentSchemeIndex = index;
     const scheme = schemes[currentSchemeIndex];
@@ -210,17 +230,16 @@ function loadScheme(index) {
                 player.pauseVideo();
             }
         } else {
-            // Stop current playback if switching to a scheme without audio
             if (isPlaying) {
                 player.stopVideo();
                 isPlaying = false;
                 updatePlayPauseIcons(false);
                 stopProgressUpdate();
+                document.getElementById('visualizer').classList.remove('active');
             }
         }
     }
 
-    // Update UI
     renderScheme();
     renderModalList();
 }
@@ -228,7 +247,7 @@ function loadScheme(index) {
 function nextScheme() {
     let nextIndex = currentSchemeIndex + 1;
     if (nextIndex >= schemes.length) {
-        nextIndex = 0; // Loop back to start
+        nextIndex = 0;
     }
     loadScheme(nextIndex);
 }
@@ -236,7 +255,7 @@ function nextScheme() {
 function prevScheme() {
     let prevIndex = currentSchemeIndex - 1;
     if (prevIndex < 0) {
-        prevIndex = schemes.length - 1; // Loop back to end
+        prevIndex = schemes.length - 1;
     }
     loadScheme(prevIndex);
 }
@@ -265,6 +284,7 @@ function renderScheme() {
 
     // Bottom player updates
     document.getElementById('bp-title').textContent = scheme.title;
+    document.getElementById('bp-mini-icon').textContent = scheme.icon;
 
     // Reset progress
     document.getElementById('progress-fill').style.width = '0%';
@@ -274,66 +294,6 @@ function renderScheme() {
     } else {
         updateTimeDisplay();
     }
-}
-
-function renderDots() {
-    const dotsContainer = document.getElementById('scheme-dots');
-    dotsContainer.innerHTML = '';
-
-    schemes.forEach((_, index) => {
-        const dot = document.createElement('div');
-        dot.className = `dot ${index === currentSchemeIndex ? 'active' : ''}`;
-        dot.onclick = () => loadScheme(index);
-        dotsContainer.appendChild(dot);
-    });
-}
-
-function updateDots() {
-    const dots = document.querySelectorAll('.dot');
-    dots.forEach((dot, index) => {
-        if (index === currentSchemeIndex) {
-            dot.classList.add('active');
-        } else {
-            dot.classList.remove('active');
-        }
-    });
-}
-
-function renderQuickSelect() {
-    const container = document.getElementById('shortcuts-container');
-    container.innerHTML = '';
-
-    // Only show first 4 schemes as shortcuts + "See All"
-    const displaySchemes = schemes.slice(0, 4);
-
-    displaySchemes.forEach((scheme, index) => {
-        const btn = document.createElement('button');
-        btn.className = `shortcut-btn ${index === currentSchemeIndex ? 'active' : ''}`;
-        btn.innerHTML = `<span>${scheme.icon}</span> ${scheme.shortName}`;
-        btn.onclick = () => loadScheme(index);
-        container.appendChild(btn);
-    });
-
-    // Add "See All" button
-    const seeAllBtn = document.createElement('button');
-    seeAllBtn.className = 'shortcut-btn';
-    seeAllBtn.innerHTML = `<span>▦</span> সব দেখুন`;
-    seeAllBtn.onclick = openModal;
-    container.appendChild(seeAllBtn);
-}
-
-function updateQuickSelect() {
-    const buttons = document.querySelectorAll('.shortcuts-container .shortcut-btn');
-    buttons.forEach((btn, index) => {
-        // Skip the "See All" button
-        if (index < 4) {
-            if (index === currentSchemeIndex) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        }
-    });
 }
 
 // Progress Bar clicking
@@ -382,20 +342,87 @@ function renderModalList() {
             <div class="sli-icon">${scheme.icon}</div>
             <div class="sli-info">
                 <div class="sli-title">${scheme.title}</div>
-                <div class="sli-desc">${scheme.description.substring(0, 45)}...</div>
+                <div class="sli-desc">${scheme.description.substring(0, 50)}...</div>
+                <div class="sli-status ${statusClass}">${statusText}</div>
             </div>
-            <div class="sli-status ${statusClass}">${statusText}</div>
         `;
         listContainer.appendChild(item);
     });
 }
 
-// Close modal when clicking outside
 window.onclick = function(event) {
     const modal = document.getElementById('scheme-modal');
     if (event.target === modal) {
         closeModal();
     }
+}
+
+// --- Premium Features ---
+
+// Toast Notification
+function showToast(message) {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    // Trigger animation
+    setTimeout(() => toast.classList.add('show'), 10);
+
+    // Remove after 3 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+// Share Functionality
+function shareScheme() {
+    const scheme = schemes[currentSchemeIndex];
+    const shareData = {
+        title: `Gazole Block - ${scheme.title}`,
+        text: scheme.description,
+        url: window.location.href
+    };
+
+    if (navigator.share) {
+        navigator.share(shareData)
+            .catch((error) => console.log('Error sharing:', error));
+    } else {
+        // Fallback to copy link
+        navigator.clipboard.writeText(window.location.href)
+            .then(() => showToast("লিঙ্ক কপি করা হয়েছে!"))
+            .catch(() => showToast("লিঙ্ক কপি করা যায়নি"));
+    }
+}
+
+// Dark Mode Theme Toggle
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+}
+
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme);
+}
+
+function updateThemeIcon(theme) {
+    const iconEl = document.querySelector('.theme-icon');
+    if(iconEl) {
+        iconEl.textContent = theme === 'light' ? '🌙' : '☀️';
+    }
+}
+
+function toggleMobileMenu() {
+    showToast("মেনু শীঘ্রই আসছে!");
 }
 
 // Initialize on load
