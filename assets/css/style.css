@@ -706,3 +706,17 @@ body {
     margin-top: -10px;
     margin-bottom: 20px;
 }
+
+/* Brand Text styles */
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.brand-text strong {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
