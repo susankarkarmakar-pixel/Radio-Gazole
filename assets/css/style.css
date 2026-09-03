@@ -1,0 +1,64 @@
+/* পুরো পেজের ব্যাকগ্রাউন্ড এবং ফন্ট */
+body {
+  background-color: #fdf6e3; /* হালকা উষ্ণ রঙ (Retro vibe) */
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+
+.salon-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.retro-header h1 {
+  color: #d35400;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.retro-header p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 30px;
+}
+
+/* ভিডিওকে ১০০% রেসপন্সিভ করার ম্যাজিক কোড */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  background: #000;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  border: 4px solid #fff;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* উক্তির বক্সের ডিজাইন */
+.quote-box {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #fff;
+  border-left: 5px solid #d35400;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: #444;
+  transition: opacity 0.5s ease-in-out;
+}
