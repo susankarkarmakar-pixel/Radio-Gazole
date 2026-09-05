@@ -22,10 +22,10 @@
     </div>
 
     <!-- Floating Modern Header -->
-    <header class="app-header">
+    <header class="app-header" role="banner">
         <div class="header-left">
             <div class="logo">
-                <span class="emblem">🏛️</span>
+                <span class="emblem" aria-hidden="true">🏛️</span>
                 <div class="brand-text">
                     <strong>GAZOLE BLOCK</strong>
                     <span>Digital Broadcast</span>
@@ -77,22 +77,22 @@
 
                 <div class="coming-soon-badge pulse-anim" id="coming-soon-badge" style="display: none;">অডিও শীঘ্রই আসছে</div>
 
-                <div class="scheme-icon bounce-on-load" id="scheme-icon">🏠</div>
+                <div class="scheme-icon bounce-on-load" id="scheme-icon" aria-hidden="true">🏠</div>
 
                 <h1 class="scheme-title text-gradient" id="scheme-title">প্রধানমন্ত্রী আবাস যোজনা (গ্রামীণ)</h1>
                 <p class="scheme-desc" id="scheme-desc">গ্রামীণ এলাকার দরিদ্র ও গৃহহীন পরিবারকে পাকা বাড়ি নির্মাণের জন্য আর্থিক সহায়তা।</p>
 
-                <div class="action-buttons">
-                    <button class="action-btn share-btn" id="share-btn">📱 শেয়ার</button>
-                    <button class="action-btn tts-btn" id="tts-btn">🔊 পড়ুন</button>
-                    <a class="action-btn apply-btn" id="apply-btn" href="#" target="_blank"> আবেদন</a>
+                <div class="action-buttons" role="group" aria-label="Scheme Actions">
+                    <button class="action-btn share-btn" id="share-btn" aria-label="Share Scheme"><span aria-hidden="true">📱</span> শেয়ার</button>
+                    <button class="action-btn tts-btn" id="tts-btn" aria-label="Read Scheme Description"><span aria-hidden="true">🔊</span> পড়ুন</button>
+                    <a class="action-btn apply-btn" id="apply-btn" href="#" target="_blank" aria-label="Apply for Scheme"> আবেদন</a>
                 </div>
 
-                <div class="audio-duration">
-                    <span>⏱</span> <span id="audio-duration-text">সময়কাল: ২ মিনিট ১৫ সেকেন্ড</span>
+                <div class="audio-duration" aria-live="polite">
+                    <span aria-hidden="true">⏱</span> <span id="audio-duration-text">সময়কাল: ২ মিনিট ১৫ সেকেন্ড</span>
                 </div>
 
-                <div class="progress-area">
+                <div class="progress-area" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0" aria-label="Audio progress">
                     <div class="progress-bar-bg" id="progress-bar-bg" onclick="seek(event)">
                         <div class="progress-fill gradient-fill" id="progress-fill"></div>
                     </div>

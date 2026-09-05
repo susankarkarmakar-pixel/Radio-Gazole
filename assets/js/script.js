@@ -1,7 +1,7 @@
 // Scheme Data Structure
 const schemes = [
     {
-        id: 1,
+        id: "suraksha",
         title: "সামাজিক সুরক্ষা ভাতা",
         description: "বয়স্ক, বিধবা ও বিশেষ চাহিদা সম্পন্ন নাগরিকদের জন্য মাসিক আর্থিক অনুদান।",
         icon: "👵",
@@ -10,7 +10,7 @@ const schemes = [
         shortName: "সুরক্ষা ভাতা"
     },
     {
-        id: 2,
+        id: "annapurna",
         title: "Annapurna Yojana",
         description: "মহিলাদের স্বনির্ভর করতে মাসিক আর্থিক অনুদান প্রকল্প।",
         icon: "💰",
@@ -19,7 +19,7 @@ const schemes = [
         shortName: "Annapurna Yojana"
     },
     {
-        id: 3,
+        id: "pmayg",
         title: "প্রধানমন্ত্রী আবাস যোজনা (গ্রামীণ)",
         description: "গ্রামীণ এলাকার দরিদ্র ও গৃহহীন পরিবারকে পাকা বাড়ি নির্মাণের জন্য আর্থিক সহায়তা।",
         icon: "🏠",
@@ -28,7 +28,7 @@ const schemes = [
         shortName: "আবাস যোজনা"
     },
     {
-        id: 4,
+        id: "kanyashree",
         title: "কন্যাশ্রী প্রকল্প",
         description: "বাল্যবিবাহ রোধ এবং মেয়েদের শিক্ষার প্রসারে আর্থিক অনুদান।",
         icon: "👩",
@@ -37,7 +37,7 @@ const schemes = [
         shortName: "কন্যাশ্রী"
     },
     {
-        id: 5,
+        id: "krishakbandhu",
         title: "কৃষক বন্ধু প্রকল্প",
         description: "কৃষকদের আর্থ-সামাজিক উন্নয়ন ও কৃষি কাজে সহায়তার জন্য অনুদান।",
         icon: "👨‍🌾",
@@ -46,7 +46,7 @@ const schemes = [
         shortName: "কৃষক বন্ধু"
     },
     {
-        id: 6,
+        id: "ayushman",
         title: "Ayushman Card",
         description: "প্রতিটি পরিবারকে বছরে ৫ লক্ষ টাকা পর্যন্ত বিনামূল্যে চিকিৎসার সুবিধা।",
         icon: "❤️",
@@ -55,7 +55,7 @@ const schemes = [
         shortName: "Ayushman Card"
     },
     {
-        id: 7,
+        id: "rupashree",
         title: "রূপশ্রী প্রকল্প",
         description: "দরিদ্র পরিবারের মেয়েদের বিয়ের জন্য এককালীন আর্থিক সহায়তা।",
         icon: "👰",
@@ -118,8 +118,20 @@ function onPlayerStateChange(event) {
 
 function initApp() {
     initTheme();
+
+    // Check URL for scheme parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const schemeParam = urlParams.get('scheme');
+    if (schemeParam) {
+        const foundIndex = schemes.findIndex(s => String(s.id) === schemeParam);
+        if (foundIndex !== -1) {
+            currentSchemeIndex = foundIndex;
+        }
+    }
+
     renderScheme();
     renderModalList();
+    initActionButtons();
 
     // Theme Toggle Listener
     const themeBtn = document.getElementById('theme-toggle');
@@ -269,6 +281,26 @@ function renderScheme() {
     document.getElementById('scheme-title').textContent = scheme.title;
     document.getElementById('scheme-desc').textContent = scheme.description;
 
+    // Update Apply Button
+    const applyBtn = document.getElementById('apply-btn');
+    if (applyBtn) {
+        // In a real scenario, this would come from the scheme object.
+        // For now, we link to a placeholder or a default portal based on scheme ID.
+        applyBtn.href = `https://gazole.gov.in/apply?scheme=${scheme.id}`;
+    }
+
+    // Stop TTS if it was reading the previous scheme
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const ttsBtn = document.getElementById('tts-btn');
+        if (ttsBtn) ttsBtn.innerHTML = '🔊 পড়ুন';
+    }
+
+    // Update URL without reloading (Deep Linking)
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.set('scheme', scheme.id);
+    window.history.replaceState({path: newUrl.href}, '', newUrl.href);
+
     const comingSoonBadge = document.getElementById('coming-soon-badge');
     const controls = document.querySelectorAll('.ctrl-btn, .play-pause-btn, .bp-ctrl-btn, .bp-play-btn');
 
@@ -378,13 +410,50 @@ function showToast(message) {
     }, 3000);
 }
 
+// Action Button Listeners
+function initActionButtons() {
+    const shareBtn = document.getElementById('share-btn');
+    if (shareBtn) shareBtn.addEventListener('click', shareScheme);
+
+    const ttsBtn = document.getElementById('tts-btn');
+    if (ttsBtn) ttsBtn.addEventListener('click', readSchemeDescription);
+}
+
+// Read Aloud (TTS) Functionality
+function readSchemeDescription() {
+    if (!('speechSynthesis' in window)) {
+        showToast("আপনার ব্রাউজার অডিও সমর্থন করে না।");
+        return;
+    }
+
+    const scheme = schemes[currentSchemeIndex];
+    const textToRead = `${scheme.title}. ${scheme.description}`;
+
+    // Stop any ongoing speech
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    utterance.lang = 'bn-IN'; // Bengali (India)
+
+    // Optional: add a visual indicator while speaking
+    const ttsBtn = document.getElementById('tts-btn');
+    utterance.onstart = () => { if(ttsBtn) ttsBtn.innerHTML = '🔊 পড়ছে...'; };
+    utterance.onend = () => { if(ttsBtn) ttsBtn.innerHTML = '🔊 পড়ুন'; };
+    utterance.onerror = () => { if(ttsBtn) ttsBtn.innerHTML = '🔊 পড়ুন'; };
+
+    window.speechSynthesis.speak(utterance);
+}
+
 // Share Functionality
 function shareScheme() {
     const scheme = schemes[currentSchemeIndex];
+    const schemeUrl = new URL(window.location.href);
+    schemeUrl.searchParams.set('scheme', scheme.id);
+
     const shareData = {
         title: `Gazole Block - ${scheme.title}`,
         text: scheme.description,
-        url: window.location.href
+        url: schemeUrl.href
     };
 
     if (navigator.share) {
@@ -392,7 +461,7 @@ function shareScheme() {
             .catch((error) => console.log('Error sharing:', error));
     } else {
         // Fallback to copy link
-        navigator.clipboard.writeText(window.location.href)
+        navigator.clipboard.writeText(schemeUrl.href)
             .then(() => showToast("লিঙ্ক কপি করা হয়েছে!"))
             .catch(() => showToast("লিঙ্ক কপি করা যায়নি"));
     }
@@ -425,9 +494,26 @@ function toggleMobileMenu() {
     showToast("মেনু শীঘ্রই আসছে!");
 }
 
+// Network Status Handling
+function updateOnlineStatus() {
+    if (!navigator.onLine) {
+        showToast("আপনি এখন অফলাইনে আছেন। অডিও নাও চলতে পারে।");
+        document.body.classList.add('offline-mode');
+    } else {
+        if (document.body.classList.contains('offline-mode')) {
+            showToast("ইন্টারনেট সংযোগ ফিরে এসেছে!");
+            document.body.classList.remove('offline-mode');
+        }
+    }
+}
+
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+
 // Initialize on load
 document.addEventListener('DOMContentLoaded', () => {
     initApp();
+    updateOnlineStatus();
 
     // Register Service Worker
     if ('serviceWorker' in navigator) {

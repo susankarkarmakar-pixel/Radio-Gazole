@@ -1182,3 +1182,20 @@ h1, h2, h3, h4, h5, h6 {
     .premium-play-btn { width: 60px; height: 60px; font-size: 1.5rem; }
     .player-controls { gap: 20px; }
 }
+/* Accessibility Focus Styles */
+*:focus-visible {
+    outline: 2px solid var(--theme-color, #4a90e2);
+    outline-offset: 2px;
+}
+
+
+/* Offline Mode Styles */
+body.offline-mode .coming-soon-badge {
+    display: inline-block !important;
+    background: rgba(255, 0, 0, 0.1);
+    color: #ff4d4d;
+    border-color: rgba(255, 0, 0, 0.3);
+}
+body.offline-mode .coming-soon-badge::before {
+    content: '⚠️ অফলাইন - ';
+}
